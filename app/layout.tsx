@@ -2,20 +2,17 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "AI App Builder",
-  description: "Describe your app in natural language, AI generates React code, see a live preview instantly, and deploy with one click.",
+  title: "AI App Builder — Build apps with natural language",
+  description:
+    "Describe your app in plain language. AI generates the code. Live preview. One-click deploy.",
 };
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen bg-background text-foreground antialiased">
-        {children}
-      </body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }
