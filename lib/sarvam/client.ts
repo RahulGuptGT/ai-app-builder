@@ -54,7 +54,7 @@ export class SarvamClient {
         model: request.model || "sarvam-105b-conversations",
         messages: request.messages,
         temperature: request.temperature ?? 0.7,
-        max_tokens: request.max_tokens ?? 8000,
+        max_tokens: request.max_tokens ?? 4096,
         stream: true,
       }),
     });
