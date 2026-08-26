@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
       .select("role, content")
       .eq("project_id", projectId)
       .order("created_at", { ascending: true })
-      .limit(20);
+      .limit(10);
 
     const systemPrompt = buildSystemPrompt(project.files || {});
 
@@ -86,7 +86,7 @@ export async function POST(req: NextRequest) {
           const sarvamStream = sarvam.streamChat({
             messages,
             temperature: 0.7,
-            max_tokens: 8000,
+            max_tokens: 4096,
           });
 
           for await (const chunk of sarvamStream) {
