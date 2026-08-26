@@ -51,7 +51,7 @@ export class SarvamClient {
         "api-key": this.apiKey,
       },
       body: JSON.stringify({
-        model: request.model || "sarvam-2",
+        model: request.model || "sarvam-105b-conversations",
         messages: request.messages,
         temperature: request.temperature ?? 0.7,
         max_tokens: request.max_tokens ?? 8000,
