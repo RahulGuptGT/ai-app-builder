@@ -2,15 +2,15 @@
 
 import dynamic from "next/dynamic";
 import { useProjectStore } from "@/stores/projectStore";
-import { Loader2 } from "lucide-react";
+import { Loader2, FileCode2 } from "lucide-react";
 
 const MonacoEditor = dynamic(
   () => import("@monaco-editor/react").then((mod) => mod.default),
   {
     ssr: false,
     loading: () => (
-      <div className="flex h-full items-center justify-center">
-        <Loader2 className="h-5 w-5 animate-spin text-gray-400" />
+      <div className="flex h-full items-center justify-center bg-[#0a0a0f]">
+        <Loader2 className="h-5 w-5 animate-spin text-indigo-500" />
       </div>
     ),
   }
@@ -21,10 +21,11 @@ export function CodeEditor() {
 
   if (!activeFile || !files[activeFile]) {
     return (
-      <div className="flex h-full items-center justify-center bg-gray-900">
-        <p className="text-sm text-gray-500">
-          Select a file from the tree, or start chatting with AI to generate
-          code.
+      <div className="flex h-full flex-col items-center justify-center bg-[#0a0a0f] text-gray-600">
+        <FileCode2 className="mb-3 h-10 w-10 text-gray-800" />
+        <p className="text-sm">No file selected</p>
+        <p className="mt-1 text-xs text-gray-700">
+          Pick a file from the tree or generate code with AI
         </p>
       </div>
     );
@@ -34,9 +35,11 @@ export function CodeEditor() {
   const language = getLanguageFromPath(activeFile);
 
   return (
-    <div className="flex h-full flex-col">
-      <div className="flex items-center border-b bg-gray-800 px-3 py-1.5">
-        <span className="text-xs text-gray-300">{activeFile}</span>
+    <div className="flex h-full flex-col bg-[#0a0a0f]">
+      {/* Tab bar */}
+      <div className="flex items-center border-b border-white/5 bg-[#12121a] px-3 py-1.5">
+        <FileCode2 className="mr-2 h-3.5 w-3.5 text-indigo-400" />
+        <span className="text-xs text-gray-400">{activeFile}</span>
       </div>
       <div className="flex-1 overflow-hidden">
         <MonacoEditor
@@ -58,7 +61,16 @@ export function CodeEditor() {
             tabSize: 2,
             automaticLayout: true,
             padding: { top: 12, bottom: 12 },
-            fontFamily: "Menlo, Monaco, 'Courier New', monospace",
+            fontFamily: "'JetBrains Mono', Menlo, Monaco, 'Courier New', monospace",
+            fontLigatures: true,
+            smoothScrolling: true,
+            cursorBlinking: "smooth",
+            cursorSmoothCaretAnimation: "on",
+            renderWhitespace: "selection",
+            scrollbar: {
+              verticalScrollbarSize: 4,
+              horizontalScrollbarSize: 4,
+            },
           }}
         />
       </div>
