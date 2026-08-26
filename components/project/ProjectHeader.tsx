@@ -1,13 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import {
   Rocket,
   Loader2,
   CheckCircle2,
   ExternalLink,
-  Settings,
 } from "lucide-react";
 import { useProjectStore } from "@/stores/projectStore";
 import { cn } from "@/lib/utils";
@@ -23,7 +21,6 @@ export function ProjectHeader() {
   const [deployStatus, setDeployStatus] = useState<
     "idle" | "deploying" | "success" | "error"
   >("idle");
-  const router = useRouter();
 
   if (!project) return null;
 
@@ -73,7 +70,7 @@ export function ProjectHeader() {
               setEditing(false);
             }
           }}
-          className="rounded border px-2 py-0.5 text-sm outline-none focus:border-indigo-500"
+          className="rounded-lg border border-white/10 bg-white/5 px-2 py-0.5 text-sm text-white outline-none focus:border-indigo-500"
           autoFocus
         />
       ) : (
@@ -82,7 +79,7 @@ export function ProjectHeader() {
             setName(project.name);
             setEditing(true);
           }}
-          className="text-sm font-medium hover:text-indigo-600"
+          className="text-sm font-medium text-gray-300 transition hover:text-white"
         >
           {project.name}
         </button>
@@ -90,10 +87,10 @@ export function ProjectHeader() {
 
       <span
         className={cn(
-          "rounded-full px-2 py-0.5 text-xs font-medium",
+          "rounded-full px-2.5 py-0.5 text-xs font-medium",
           project.status === "deployed"
-            ? "bg-green-100 text-green-700"
-            : "bg-gray-100 text-gray-600"
+            ? "bg-green-500/10 text-green-400"
+            : "bg-white/5 text-gray-400"
         )}
       >
         {project.status}
@@ -105,7 +102,7 @@ export function ProjectHeader() {
             href={deployUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1 text-xs text-green-600 hover:underline"
+            className="flex items-center gap-1 text-xs text-green-400 transition hover:underline"
           >
             <CheckCircle2 className="h-3.5 w-3.5" />
             Deployed
@@ -114,13 +111,13 @@ export function ProjectHeader() {
         )}
 
         {deployStatus === "error" && (
-          <span className="text-xs text-red-600">Deploy failed</span>
+          <span className="text-xs text-red-400">Deploy failed</span>
         )}
 
         <button
           onClick={handleDeploy}
           disabled={deploying}
-          className="flex items-center gap-1.5 rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
+          className="flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-600 px-3 py-1.5 text-xs font-medium text-white transition hover:brightness-110 disabled:opacity-50"
         >
           {deploying ? (
             <Loader2 className="h-3.5 w-3.5 animate-spin" />
