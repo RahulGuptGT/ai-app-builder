@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { Sandpack } from "@codesandbox/sandpack-react";
-import { Loader2, RefreshCw, ExternalLink } from "lucide-react";
+import { Loader2, RefreshCw, Monitor, Smartphone, Tablet } from "lucide-react";
 import { useProjectStore } from "@/stores/projectStore";
 
 export function LivePreview() {
@@ -53,23 +53,25 @@ export function LivePreview() {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex items-center justify-between border-b bg-white px-3 py-2">
+      {/* Preview header */}
+      <div className="flex items-center justify-between border-b border-gray-200 bg-[#12121a] px-3 py-2">
         <div className="flex items-center gap-2">
-          <div className="flex gap-1">
+          <div className="flex gap-1.5">
             <div className="h-2.5 w-2.5 rounded-full bg-red-400" />
             <div className="h-2.5 w-2.5 rounded-full bg-yellow-400" />
             <div className="h-2.5 w-2.5 rounded-full bg-green-400" />
           </div>
-          <span className="ml-2 text-xs text-gray-500">Live Preview</span>
+          <span className="ml-2 text-xs text-gray-400">Live Preview</span>
         </div>
         {isGenerating && (
-          <div className="flex items-center gap-1 text-xs text-indigo-600">
+          <div className="flex items-center gap-1 text-xs text-indigo-400">
             <Loader2 className="h-3 w-3 animate-spin" />
             Updating...
           </div>
         )}
       </div>
 
+      {/* Sandpack preview */}
       <div className="flex-1 overflow-hidden">
         {hasFiles ? (
           <Sandpack
@@ -95,12 +97,14 @@ export function LivePreview() {
             }}
           />
         ) : (
-          <div className="flex h-full flex-col items-center justify-center bg-gray-50 text-center">
-            <RefreshCw className="mb-3 h-8 w-8 text-gray-300" />
+          <div className="flex h-full flex-col items-center justify-center bg-[#0a0a0f] text-center">
+            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/5">
+              <RefreshCw className="h-8 w-8 text-gray-700" />
+            </div>
             <p className="text-sm text-gray-500">
               Your live preview will appear here
             </p>
-            <p className="mt-1 text-xs text-gray-400">
+            <p className="mt-1 text-xs text-gray-600">
               Start by describing your app in the chat
             </p>
           </div>
