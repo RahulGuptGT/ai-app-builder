@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Sparkles, LogOut, Loader2 } from "lucide-react";
+import { Sparkles, LogOut, Loader2, ChevronLeft } from "lucide-react";
 import { useAuthStore } from "@/stores/authStore";
 import { useProjectStore } from "@/stores/projectStore";
 import { ChatPanel } from "@/components/chat/ChatPanel";
@@ -39,58 +39,72 @@ export default function ProjectPage({
 
   if (isLoading || !user) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
+      <div className="flex min-h-screen items-center justify-center bg-[#0a0a0f]">
+        <Loader2 className="h-8 w-8 animate-spin text-indigo-500" />
       </div>
     );
   }
 
   if (!project) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
+      <div className="flex min-h-screen items-center justify-center bg-[#0a0a0f]">
+        <Loader2 className="h-8 w-8 animate-spin text-indigo-500" />
       </div>
     );
   }
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden bg-gray-50">
-      <header className="flex items-center justify-between border-b bg-white px-4 py-2">
+    <div className="flex h-screen flex-col overflow-hidden bg-[#0a0a0f] text-white">
+      {/* Top Bar */}
+      <header className="flex items-center justify-between border-b border-white/5 bg-[#12121a] px-4 py-2.5">
         <div className="flex items-center gap-3">
+          <Link
+            href="/dashboard"
+            className="flex items-center gap-2 text-gray-400 transition hover:text-white"
+            title="Back to dashboard"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </Link>
           <Link href="/dashboard" className="flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-indigo-600" />
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600">
+              <Sparkles className="h-4 w-4 text-white" />
+            </div>
             <span className="text-sm font-bold">AppBuilder</span>
           </Link>
-          <span className="text-gray-300">/</span>
+          <span className="text-gray-700">/</span>
           <ProjectHeader />
         </div>
         <div className="flex items-center gap-3">
-          <span className="text-xs text-gray-500">{user.email}</span>
+          <span className="hidden text-xs text-gray-500 sm:block">{user.email}</span>
           <button
             onClick={signOut}
-            className="flex items-center gap-1 text-xs text-gray-500 hover:text-gray-900"
+            className="flex items-center gap-1 text-xs text-gray-500 transition hover:text-white"
+            title="Logout"
           >
             <LogOut className="h-3.5 w-3.5" />
           </button>
         </div>
       </header>
 
+      {/* Main 3-panel layout */}
       <div className="flex flex-1 overflow-hidden">
-        <div className="w-80 shrink-0 border-r bg-white">
+        {/* Left: Chat Panel */}
+        <div className="w-80 shrink-0 border-r border-white/5 bg-[#12121a]">
           <ChatPanel />
         </div>
 
+        {/* Middle: Code Editor + File Tree */}
         <div className="flex flex-1 overflow-hidden">
-          <div className="w-48 shrink-0 border-r bg-gray-50">
+          <div className="w-48 shrink-0 border-r border-white/5 bg-[#0e0e16]">
             <FileTree />
           </div>
-
           <div className="flex-1 overflow-hidden">
             <CodeEditor />
           </div>
         </div>
 
-        <div className="w-[420px] shrink-0 border-l bg-white">
+        {/* Right: Live Preview */}
+        <div className="w-[420px] shrink-0 border-l border-white/5 bg-white">
           <LivePreview />
         </div>
       </div>
